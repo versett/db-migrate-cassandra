@@ -1,0 +1,7 @@
+{
+    "dev": {
+        "driver": "cassandra",
+        "host": ["localhost"],
+        "database": "dbmigration"
+    }
+}

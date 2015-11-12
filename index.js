@@ -45,7 +45,7 @@ var CqlshDriver = Base.extend({
     cql.push(metaData.join(', '));
     cql.push(')');
     var cqlString = cql.join(' ');
-    return this.runSql(cqlString, callback).nodeify(callback).nodeify(callback);
+    return this.runSql(cqlString, callback).nodeify(callback);
   },
 
   /**
@@ -191,7 +191,7 @@ var CqlshDriver = Base.extend({
         var prCB = function(err, data) {
           if (err) {
             log.error(err.message);
-            log.info(command);
+            log.debug(command);
           }
           return (err ? reject('err') : resolve(data));
         };

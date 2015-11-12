@@ -1,6 +1,6 @@
 {
   "name": "db-migrate-cassandra",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Cassanda migration using CQLSH  for node DB migration",
   "main": "index.js",
   "scripts": {

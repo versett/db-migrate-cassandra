@@ -15,12 +15,14 @@ Set up your database.json as mentoned in `database.json.example`
 ## Supported Migrations
 * Create Table
   ```js
-  db.createTable('users', {
-  'name': 'varchar',
-  'age': 'id'
-  }, {
-  'primary_key': 'name'
- });
+  exports.up = function (db, callback) {
+    db.createTable('users', {
+    'name': 'varchar',
+    'age': 'id'
+    }, {
+    'primary_key': 'name'
+    }, callback);
+ };
  ```
  
   Supports multiple parimary keys
@@ -31,27 +33,37 @@ Set up your database.json as mentoned in `database.json.example`
 
 * Drop Table
   ```js
-  db.dropTable('users');
+  exports.up = function (db, callback) {
+    db.dropTable('users', callback);
+  };
   ```
   
 * Add new column
   ```js
-  db.addColumn('users', 'age', 'int');
+  exports.up = function (db, callback) {
+    db.addColumn('users', 'age', 'int', callback);
+  };
   ```
   
 * Drop existing column
   ```js
-  db.removeColumn('users', 'age');
+  exports.up = function (db, callback) {
+    db.removeColumn('users', 'age', callback);
+  };
   ```
   
 * Rename a column
   ```js
-  db.renameColumn('users', 'age', 'age2');
+  exports.up = function (db, callback) {
+    db.renameColumn('users', 'age', 'age2', callback);
+  };
   ```
 
 * Change column type
   ```js
-  db.changeColumn('users', 'age', 'blob');
+  exports.up = function (db, callback) {
+    db.changeColumn('users', 'age', 'blob', callback);
+  };
   ```
   
 ## TODOs

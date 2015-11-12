@@ -54,7 +54,7 @@ Set up your database.json as mentoned in `database.json.example`
   
 ## TODOs
 * This module is built using `cassandra-driver` need to add support for creating new keyspace.
-* 
+
 ## Contribution
 * Fork the repository
 * Build the feature

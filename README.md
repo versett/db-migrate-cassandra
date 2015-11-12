@@ -13,7 +13,7 @@ npm install db-migrate-cassandra
 Set up your database.json as mentoned in `database.json.example`
 
 ## Supported Migrations
-* #####Create Table
+* Create Table
   ```js
   db.createTable('users', {
   'name': 'varchar',
@@ -24,30 +24,32 @@ Set up your database.json as mentoned in `database.json.example`
  ```
  
   Supports multiple parimary keys
+
   ```js
   'primary_key': '(name, age)'
   ```
-* #####Drop Table
+
+* Drop Table
   ```js
   db.dropTable('users');
   ```
   
-* #####Add new column
+* Add new column
   ```js
   db.addColumn('users', 'age', 'int');
   ```
   
-* #####Drop existing column
+* Drop existing column
   ```js
   db.removeColumn('users', 'age');
   ```
   
-* #####Rename a column
+* Rename a column
   ```js
   db.renameColumn('users', 'age', 'age2');
   ```
 
-* #####Change column type
+* Change column type
   ```js
   db.changeColumn('users', 'age', 'blob');
   ```

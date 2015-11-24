@@ -6,10 +6,7 @@
   "scripts": {
     "test": "mocha test"
   },
-  "repository": {
-    "type": "git",
-    "url": "github/ramakrishnan/db-migrate-cassandra"
-  },
+  "repository": "git://github.com/ramakrishnan/db-migrate-cassandra",
   "keywords": [
     "cassandra",
     "cqlsh",

@@ -18,7 +18,7 @@ Set up your database.json as mentoned in `database.json.example`
   exports.up = function (db, callback) {
     db.createTable('users', {
     'name': 'varchar',
-    'age': 'id'
+    'age': 'int'
     }, {
     'primary_key': 'name'
     }, callback);

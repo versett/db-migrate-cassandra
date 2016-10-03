@@ -46,6 +46,21 @@ describe('Cassandra Migration', function() {
                 assert.equal(executeSpy.args[0][0], expectedQuery.join(' '));
                 executeSpy.reset();
             });
+
+            it('A simple table with compression', function() {
+                db.createTable('users', {
+                    'name': 'varchar'
+                }, {
+                    'primary_key': 'name',
+                    'compression': "{'sstable_compression': 'DeflateCompressor', 'chunk_length_kb': 1024}"
+                });
+                var expectedQuery = ['CREATE TABLE IF NOT EXISTS users',
+                    "( name varchar, PRIMARY KEY (name) )",
+                    "WITH compression = {'sstable_compression': 'DeflateCompressor', 'chunk_length_kb': 1024}"];
+                sinon.assert.calledOnce(executeSpy);
+                assert.equal(executeSpy.args[0][0], expectedQuery.join(' '));
+                executeSpy.reset();
+            });
         });
         describe('Drop table', function() {
             it('Should build a valid SQL', function() {

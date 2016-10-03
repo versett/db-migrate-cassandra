@@ -2,17 +2,33 @@ var assert = require('chai').assert;
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var driver = require('./index');
-var config =  { "driver": "cassandra",
-                "host": ["localhost"],
-                "database": "dbmigration"
-            };
+var testHostname = 'localhost';
+var config =  {
+    "driver": "cassandra",
+    "host": [testHostname],
+    "database": "dbmigration"
+};
+var configWithHostListAsString =  {
+    "driver": "cassandra",
+    "host": testHostname + "," + testHostname,
+    "database": "dbmigration"
+};
+var configWithSingleHostAsString =  {
+    "driver": "cassandra",
+    "host": testHostname,
+    "database": "dbmigration"
+};
+var configWithoutHost = {
+    "driver": "cassandra",
+    "database": "dbmigration"
+}
 
 var internals = {};
 internals.mod = {};
 
 internals.migrationTable = 'migrations';
 describe('Cassandra Migration', function() {
-    driver.connect(config, internals, function(err, db) {
+    driver.connect(config, internals, function(err, db) {        
         // Stub connection execute
         var executeSpy = sinon.spy();
         db.connection.execute = function () {};
@@ -87,4 +103,40 @@ describe('Cassandra Migration', function() {
             });
         });
     });
-})
+
+    describe('Driver contactPoints format', function() {
+        var checkHostname = function(db, name) {
+            name = name || testHostname;
+            var hostname = db.connectionParam.hostname;
+            for (var i = 0; i < db.connectionParam.length; i++) {
+                assert.equal(hostname[i], name);
+            }
+        }
+
+        driver.connect(config, internals, function(err, db) {            
+            it('Host as array configuration', function() {
+                checkHostname(db);
+            });
+        });
+
+        driver.connect(
+                configWithHostListAsString, internals, function(err, db) {            
+            it('Host as comma-list configuration', function() {
+                checkHostname(db);
+            });
+        });
+
+        driver.connect(
+                configWithSingleHostAsString, internals, function(err, db) {            
+            it('Host as single string configuration', function() {
+                checkHostname(db);
+            });
+        });
+        
+        driver.connect(configWithoutHost, internals, function(err, db) {
+            it('Host missing', function() {
+                checkHostname(db, 'localhost');
+            });
+        });
+    });
+});

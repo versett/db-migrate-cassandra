@@ -44,6 +44,10 @@ var CqlshDriver = Base.extend({
     metaData.push('PRIMARY KEY ' + primaryKey);
     cql.push(metaData.join(', '));
     cql.push(')');
+    if (constraints.compression) {
+      cql.push('WITH compression =');
+      cql.push(constraints.compression);
+    }
     var cqlString = cql.join(' ');
     return this.runSql(cqlString, callback).nodeify(callback);
   },
@@ -243,8 +247,8 @@ exports.connect = function(config, intern, callback) {
   connectionParam.hostname = config.host;
   connectionParam.keyspace = config.database;
 
-  db = config.db || new cassandra.Client({ 
-    contactPoints: connectionParam.hostname, 
+  db = config.db || new cassandra.Client({
+    contactPoints: connectionParam.hostname,
     keyspace: connectionParam.keyspace
   });
 

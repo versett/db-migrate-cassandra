@@ -216,7 +216,6 @@ Promise.promisifyAll(CqlshDriver);
  */
 exports.connect = function(config, intern, callback) {
   var db;
-  var port;
   var host;
 
   internals = intern;
@@ -232,10 +231,10 @@ exports.connect = function(config, intern, callback) {
     host = config.host;
   }
 
-  if(config.port === undefined) {
-    port = 9160;
-  } else {
-    port = config.port;
+  // Cassandra driver expects host to be an array. Allow for comma separated
+  // host lists, too.
+  if (host.constructor !== Array) {
+    host = host.split(",")
   }
 
   // TODO: See if we need connectionParam or can directly be driven from cofig
@@ -244,7 +243,7 @@ exports.connect = function(config, intern, callback) {
     connectionParam.user = config.user,
     connectionParam.password = config.password
   }
-  connectionParam.hostname = config.host;
+  connectionParam.hostname = host;
   connectionParam.keyspace = config.database;
 
   db = config.db || new cassandra.Client({

@@ -246,10 +246,18 @@ exports.connect = function(config, intern, callback) {
   connectionParam.hostname = host;
   connectionParam.keyspace = config.database;
 
-  db = config.db || new cassandra.Client({
-    contactPoints: connectionParam.hostname,
-    keyspace: connectionParam.keyspace
-  });
+  const authProvider = new cassandra.auth.PlainTextAuthProvider(
+    config.user,
+    config.password
+  );
+
+  db =
+    config.db ||
+    new cassandra.Client({
+      contactPoints: connectionParam.hostname,
+      keyspace: connectionParam.keyspace,
+      authProvider
+    });
 
   callback(null, new CqlshDriver(db, connectionParam));
 };

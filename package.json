@@ -1,13 +1,19 @@
 {
   "name": "db-migrate-cassandra-versett",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Cassanda migration using CQLSH  for node DB migration",
   "main": "index.js",
   "scripts": {
     "test": "mocha test"
   },
   "repository": "git://github.com/versett/db-migrate-cassandra",
-  "keywords": ["cassandra", "cqlsh", "migration", "nodejs", "migrate"],
+  "keywords": [
+    "cassandra",
+    "cqlsh",
+    "migration",
+    "nodejs",
+    "migrate"
+  ],
   "author": "Ramakrishnan Vasudevan",
   "license": "MIT",
   "dependencies": {
